@@ -1,0 +1,44 @@
+{
+  "name": "Gmail Total Count",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Gmail extension to display the total number of emails in a label",
+  "permissions": [
+    "identity",
+    "tabs",
+    "activeTab",
+    "notifications",
+    "background",
+    "storage",
+    "https://ajax.googleapis.com/",
+    "*://*.google.com/*",
+    "https://www.googleapis.com/*",
+    "https://*.googleusercontent.com/*"
+  ],
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_title": "Click here!"  
+  },
+  "background": {
+    "scripts": [ "base64.js", "background_auth.js" ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://developer.chrome.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "content_security_policy": "script-src https://*.google.com 'unsafe-eval'; object-src 'self'",
+  "oauth2": {
+    "client_id": "932286589146-7hkf5kahgqeqjr3q5psj8ob3gmm0l4g0.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7gD081/cEIqvWQiA5EyoaDAAXN8kLSlz3gW383sTSLN+LEFkcdX+SOPq8tvvvOV1XVDxq4v11sU8OMv22AfSb1LltxlwpPaAyxFGp4Zv9v2dkJItYUYrCwjYE33wggLwvi/r/f87hBSu8PMr01H3CHHK+5i3WOa0Vjh1DctkXbJzAScLXFf+b59CWdDd8MY+2ylIUFf9/j9cUniOIKuXEhWDkZkvZWET436O5SwDxKSd3gzBxrze7w2UB/iqXXRaMQyJBYDwe3fir4E5oPGyBSQQvHfhVuFRZ2Bs1oX/IuQxeaJGQYK4UDQud64wLL2Nk4IDKQjzSRP5Eijk/tsRXQIDAQAB"
+}
+
