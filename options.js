@@ -3,11 +3,8 @@ function save_options() {
   var labels = document.forms['labels_form'].elements['gmail_labels[]'];
   var labelsChecked = [];
   for(var i=0; i<labels.length; i++) {
-    console.log(labels[i]);
     labelsChecked.push(labels[i].checked);
   }
-  
-  
   
   chrome.storage.sync.set({
     labelsChecked: labelsChecked
@@ -23,21 +20,27 @@ function save_options() {
 }
 
 function restore_options() {
-  populate_labels();
   console.log("restoring options");
   chrome.storage.sync.get({
     labelsChecked: []
   }, function(saved) {
-    var labels = document.forms['labels_form'].elements['gmail_labels[]'];
+    var labels = document.getElementsByName('gmail_labels[]');
     console.log(saved.labelsChecked);
-    // Default value of false
+    console.log(labels);
+    debugger;
+    console.log("len: " + labels.length);
+    debugger;
+    // Set default value of false to any extra vars that need to be added
     while(saved.labelsChecked.length < labels.length)
       saved.labelsChecked.push(false);
-      
+
+    console.log("len: " + labels.length);
     for(var i=0; i<labels.length; i++) {
       console.log(saved.labelsChecked[i]);
       labels[i].checked = saved.labelsChecked[i];
     }
+
+    
     
   });
 }
@@ -63,9 +66,11 @@ function populate_labels() {
       container.appendChild(document.createElement("br"));
       
     }
+    
+    restore_options();
   });
 }
 
 console.log("in options js");
-document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', populate_labels);
 document.getElementById('btn_save').addEventListener('click', save_options);
